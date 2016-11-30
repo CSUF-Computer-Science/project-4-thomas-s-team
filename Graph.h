@@ -61,6 +61,12 @@ public:
 		return path;
 	}
 
+	~Graph()
+	{
+		for (int i = 0; i < vertices; i++)
+			delete[] adj[i];
+		delete[] adj;
+	}
 private:
 	// TO DO
 	// member variables and functions to implement the public member functions
