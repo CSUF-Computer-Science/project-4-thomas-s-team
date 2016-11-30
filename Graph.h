@@ -7,14 +7,14 @@ public:
 	// TO DO
 	// initialize an undirected graph that can store at most n vertices
 	Graph(const int n) {
-		v = n;
-		adj = new int*[n];
-		for (int i = 0; i < n; i++)
+		vertices = n;
+		adj = new bool*[n];
+		for (int i = 0; i < vertices; i++)
 		{
-			adj[i] = new int[n];
-			for (int j = 0; j < n; j++)
+			adj[i] = new bool[vertices];
+			for (int j = 0; j < vertices; j++)
 			{
-				adj[i][j] = 0;
+				adj[i][j] = false;
 			}
 		}
 	}
@@ -22,12 +22,13 @@ public:
 	// TO DO
 	// insert an edge between vertices u and v
 	void insertEdge(int u, int v) {
-		if (u > this->v || v > this->v || u < 0 || v < 0)
+		if (u >= 0 && u < vertices && v > 0 && j < vertices)
 		{
-			throw invalid_argument("invalid vertices");
+			adj[u][v] = true;
+			adj[v][u] = true;
 		}
 		else
-			adj[u - 1][v - 1] = 1;
+			throw invalid_argument("invalid vertices");
 	}
 
 	// TO DO
@@ -50,14 +51,20 @@ public:
 	// vertices should not be repeated
 	std::vector<int> getPath(int v, int w) {
 		std::vector<int> path;
-		
+		for (int i = v; i < w; i++)
+		{
+			if (adj[v][i] == 1)
+			{
+				path.push_back(i);
+			}
+		}
 		return path;
 	}
 
 private:
 	// TO DO
 	// member variables and functions to implement the public member functions
-	int v; //number of vertices
-	int **adj;
+	int vertices; //number of vertices
+	bool **adj;
 };
 
