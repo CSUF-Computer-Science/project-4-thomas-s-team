@@ -51,11 +51,22 @@ public:
 	// vertices should not be repeated
 	std::vector<int> getPath(int v, int w) {
 		std::vector<int> path;
-		for (int i = v; i < w; i++)
+		for (int i = 0; i < numOfVertices; i++)
 		{
-			if (adj[v][i] == 1)
+			if (adj[v][i] == adj[w][i])
 			{
 				path.push_back(i);
+			}
+		}
+
+		for (int i = 0; i < numOfVertices - 1; i++)
+		{
+			for (int j = i + 1; j < numOfVertices; j++)
+			{
+				if (path[i] == path[j])
+				{
+					path.erase[j];
+				}
 			}
 		}
 		return path;
