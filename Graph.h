@@ -58,6 +58,17 @@ public:
 				path.push_back(i);
 			}
 		}
+
+		for (int i = 0; i < numOfVertices - 1; i++)
+		{
+			for (int j = i + 1; j < numOfVertices; j++)
+			{
+				if (path[i] == path[j])
+				{
+					path.erase[j];
+				}
+			}
+		}
 		return path;
 	}
 
