@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 class Graph {
 public:
@@ -59,16 +60,7 @@ public:
 			}
 		}
 
-		for (int i = 0; i < numOfVertices - 1; i++)
-		{
-			for (int j = i + 1; j < numOfVertices; j++)
-			{
-				if (path[i] == path[j])
-				{
-					path.erase[j];
-				}
-			}
-		}
+		unique(path.begin(), path.end());
 		return path;
 	}
 
