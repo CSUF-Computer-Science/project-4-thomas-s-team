@@ -28,8 +28,8 @@ public:
 			adj[u][v] = true;
 			adj[v][u] = true;
 		}
-		else
-			throw invalid_argument("invalid vertices");
+		/*else
+			throw invalid_argument("invalid vertices");*/
 	}
 
 	// TO DO
@@ -38,7 +38,7 @@ public:
 		std::vector<int> vertices;
 		for (int i = 0; i < numOfVertices; i++)
 		{
-			if (adj[v][i] == true)
+			if (adj[v][i] == true && adj[i][v] == true)
 			{
 				vertices.push_back(i);
 			}
@@ -52,16 +52,36 @@ public:
 	// vertices should not be repeated
 	std::vector<int> getPath(int v, int w) {
 		std::vector<int> path;
-		for (int i = 0; i < numOfVertices; i++)
+		std::vector<int> temp;
+		std::vector<int>::iterator iter;
+		int a;
+		if (v == w)
 		{
-			if (adj[v][i] == adj[w][i])
-			{
-				path.push_back(i);
-			}
+			path.push_back(w);
+			return path;
 		}
+		else
+		{
+			path.push_back(v);
+			std::cout << v << " ";
+			temp = this->adjacentVertices(v);
 
-		unique(path.begin(), path.end());
-		return path;
+			iter = find(path.begin(), path.end(), v);
+
+			//need to do something to make a = new element found in adjacentVertices (different from previous vertice)
+			//make a = temp[0] for example in order to do the recursive case
+
+			/*for (iter = temp.begin(); iter != temp.end(); iter++)
+			{
+				if (*iter == w)
+				{
+					a = w;
+				}
+			}*/
+			
+			return (this->getPath(a, w));
+		}
+		//unique(path.begin(), path.end());
 	}
 
 	~Graph()
