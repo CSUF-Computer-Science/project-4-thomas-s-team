@@ -10,7 +10,7 @@ public:
 	Graph(const int n) {
 		numOfVertices = n;
 		adj = new bool*[n];
-		for (int i = 0; i < numOfVertices; i++)
+		for (int i = 1; i= < numOfVertices; i++)
 		{
 			adj[i] = new bool[numOfVertices];
 			for (int j = 0; j < numOfVertices; j++)
@@ -23,7 +23,7 @@ public:
 	// TO DO
 	// insert an edge between vertices u and v
 	void insertEdge(int u, int v) {
-		if (u >= 0 && u < numOfVertices && v > 0 && v < numOfVertices)
+		if (u >= 1 && u < numOfVertices && v > 0 && v < numOfVertices)
 		{
 			adj[u][v] = true;
 			adj[v][u] = true;
@@ -34,7 +34,7 @@ public:
 	// return the set of vertices that are adjacent to v
 	std::vector<int> adjacentVertices(int v) {
 		std::vector<int> vertices;
-		for (int i = 0; i < numOfVertices; i++)
+		for (int i = 1; i <= numOfVertices; i++)
 		{
 			if (adj[v][i] == true)
 			{
