@@ -50,51 +50,52 @@ public:
 	// vertices should not be repeated
 	std::vector<int> getPath(int v, int w) {
 		
-		std::vector<int> path;
-        	std::vector<int> isAdjacent;
-        	std::vector<int> current;
-        
-        	found = 0;
-        	path.push_back(v);
+		std::vector<int> path;			//returns the route
+        	std::vector<int> isAdjacent;		//holds adjacent vertices to current vertex
+        	std::vector<int> current;		//recieves path
+		
+		//if vertex has been visited, return to previous vertex
+        	for (int i = 0; i < visited.size(); i++)
+			if(v == visited[i])
+				return path;
+		visited.push_back(v);			//current vertex has now been visited
+		
+		//check if destination has been reached
+		//if yes, clear visited and return that vertex
         	if (v == w)
         	{
 			visited.clear();
-            		found = 1;
+			path.push_back(v);
+            		found = 1;			//arrived at destination
             		return path;
 		}
 		else
         	{
-			isAdjacent = adjacentVertices(v);
+			found = 0;				//destination not reached
+			isAdjacent = adjacentVertices(v);	//get adjacent vertices to current vertex
 			
-			//delete any visited vertex
-			for (int j = 0; j < isAdjacent.size() && !isAdjacent.empty(); j++)
-                		for (int c = 0; c < visited.size() && !isAdjacent.empty(); c++)
-                    			if (visited[c] == isAdjacent[j])
-                        			isAdjacent.erase(isAdjacent.begin()+j);
-			visited.push_back(v);
-			
+			//check each vertices to see if it lands on destination
 			for (int i = 0; i < isAdjacent.size(); i++)
             		{
+				//if vertex already found, leave the loop
 				if(found)
                     			break;
-                
-				if(isAdjacent.empty())
-                    			return isAdjacent;
                 		else
                 		{
+					//check adjacent vertices to see if it goes to destination
 					current = getPath(isAdjacent[i], w);
-                    			for(int j = 0; j < current.size(); j++)
-                        		path.push_back(current[j]);
+					//if found copy current to path
+					if(found)
+					{
+						path.push_back(v);
+						for(int j = 0; j < current.size(); j++)
+                        				path.push_back(current[j]);
+					}
                 		}
 			}
 		}
-		if(!found)
-        	{
-			path.pop_back();
-            		return path;
-        	}
-        	else
-            		return path;
+		
+		return path;
 	}
 
 	~Graph()
@@ -102,6 +103,7 @@ public:
 		for (int i = 0; i < numOfVertices; i++)
 			delete[] adj[i];
 		delete[] adj;
+		visited.~vector();
 	}
 private:
 	// TO DO
