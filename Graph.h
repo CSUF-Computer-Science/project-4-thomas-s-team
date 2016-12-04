@@ -10,7 +10,7 @@ public:
 	Graph(const int n) {
 		numOfVertices = n;
 		adj = new bool*[n];
-		for (int i = 1; i= < numOfVertices; i++)
+		for (int i = 1; i <= numOfVertices; i++)
 		{
 			adj[i] = new bool[numOfVertices];
 			for (int j = 0; j < numOfVertices; j++)
