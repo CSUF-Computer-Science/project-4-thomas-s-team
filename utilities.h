@@ -13,7 +13,7 @@ using namespace std;
 // return a vector of strings containing the stations names indexed by their identifiers
 // throw an exception if there was a problem opening or reading the file
 std::vector<string> readStationNames(const std::string& filename) {
-	vector<string> stations;
+	vector<string> stations(400);		//At most 400 stations
 	ifstream file;
 	file.open(filename);
 	string s;
@@ -21,12 +21,11 @@ std::vector<string> readStationNames(const std::string& filename) {
 
 	if(!file)
 		throw invalid_argument("Unable to open file " + filename);
-
-	stations.push_back("");			//place holder for 0
+	
 	while (file >> s)
 	{
 		file >> ID;
-		stations.push_back(s);
+		stations[ID] = s;
 	}
 
 	return stations;
@@ -50,5 +49,6 @@ Graph *buildGraphfromDatafile(const std::string& filename) {
 		file >> b;
 		stationLink->insertEdge(a, b);
 	}
+	
 	return stationLink;
 }
