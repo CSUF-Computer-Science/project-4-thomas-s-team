@@ -28,8 +28,6 @@ public:
 			adj[u][v] = true;
 			adj[v][u] = true;
 		}
-		else
-			throw invalid_argument("invalid vertices");
 	}
 
 	// TO DO
@@ -51,17 +49,52 @@ public:
 	// return a list of vertices that appear between v and w, starting with v and ending with w
 	// vertices should not be repeated
 	std::vector<int> getPath(int v, int w) {
+		
 		std::vector<int> path;
-		for (int i = 0; i < numOfVertices; i++)
-		{
-			if (adj[v][i] == adj[w][i])
-			{
-				path.push_back(i);
+        	std::vector<int> isAdjacent;
+        	std::vector<int> current;
+        
+        	found = 0;
+        	path.push_back(v);
+        	if (v == w)
+        	{
+			visited.clear();
+            		found = 1;
+            		return path;
+		}
+		else
+        	{
+			isAdjacent = adjacentVertices(v);
+			
+			//delete any visited vertex
+			for (int j = 0; j < isAdjacent.size() && !isAdjacent.empty(); j++)
+                		for (int c = 0; c < visited.size() && !isAdjacent.empty(); c++)
+                    			if (visited[c] == isAdjacent[j])
+                        			isAdjacent.erase(isAdjacent.begin()+j);
+			visited.push_back(v);
+			
+			for (int i = 0; i < isAdjacent.size(); i++)
+            		{
+				if(found)
+                    			break;
+                
+				if(isAdjacent.empty())
+                    			return isAdjacent;
+                		else
+                		{
+					current = getPath(isAdjacent[i], w);
+                    			for(int j = 0; j < current.size(); j++)
+                        		path.push_back(current[j]);
+                		}
 			}
 		}
-
-		unique(path.begin(), path.end());
-		return path;
+		if(!found)
+        	{
+			path.pop_back();
+            		return path;
+        	}
+        	else
+            		return path;
 	}
 
 	~Graph()
@@ -74,6 +107,8 @@ private:
 	// TO DO
 	// member variables and functions to implement the public member functions
 	int numOfVertices; //number of vertices
+	std::vector<int> visited;
+    	bool found;
 	bool **adj;
 };
 
