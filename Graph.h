@@ -9,6 +9,11 @@ public:
 	// initialize an undirected graph that can store at most n vertices
 	Graph(const int n) {
 		numOfVertices = n;
+		found = false;
+		for (unsigned int i = 0; i < visited.size(); i++)
+		{
+			visited[i] = 0;
+		}
 		adj = new bool*[n];
 		for (int i = 1; i <= numOfVertices; i++)
 		{
@@ -49,52 +54,52 @@ public:
 	// return a list of vertices that appear between v and w, starting with v and ending with w
 	// vertices should not be repeated
 	std::vector<int> getPath(int v, int w) {
-		
+
 		std::vector<int> path;			//returns the route
-        	std::vector<int> isAdjacent;		//holds adjacent vertices to current vertex
-        	std::vector<int> current;		//recieves path
-		
+		std::vector<int> isAdjacent;		//holds adjacent vertices to current vertex
+		std::vector<int> current;		//recieves path
+
 		//if vertex has been visited, return to previous vertex
-        	for (int i = 0; i < visited.size(); i++)
-			if(v == visited[i])
-				return path;
+		for (unsigned int i = 0; i < visited.size(); i++)
+		if (v == visited[i])
+			return path;
 		visited.push_back(v);			//current vertex has now been visited
-		
+
 		//check if destination has been reached
 		//if yes, clear visited and return that vertex
-        	if (v == w)
-        	{
+		if (v == w)
+		{
 			visited.clear();
 			path.push_back(v);
-            		found = 1;			//arrived at destination
-            		return path;
+			found = 1;			//arrived at destination
+			return path;
 		}
 		else
-        	{
+		{
 			found = 0;				//destination not reached
 			isAdjacent = adjacentVertices(v);	//get adjacent vertices to current vertex
-			
+
 			//check each vertices to see if it lands on destination
-			for (int i = 0; i < isAdjacent.size(); i++)
-            		{
+			for (unsigned int i = 0; i < isAdjacent.size(); i++)
+			{
 				//if vertex already found, leave the loop
-				if(found)
-                    			break;
-                		else
-                		{
+				if (found)
+					break;
+				else
+				{
 					//check adjacent vertices to see if it goes to destination
 					current = getPath(isAdjacent[i], w);
 					//if found copy current to path
-					if(found)
+					if (found)
 					{
 						path.push_back(v);
-						for(int j = 0; j < current.size(); j++)
-                        				path.push_back(current[j]);
+						for (unsigned int j = 0; j < current.size(); j++)
+							path.push_back(current[j]);
 					}
-                		}
+				}
 			}
 		}
-		
+
 		return path;
 	}
 
@@ -110,7 +115,6 @@ private:
 	// member variables and functions to implement the public member functions
 	int numOfVertices; //number of vertices
 	std::vector<int> visited;
-    	bool found;
+	bool found;
 	bool **adj;
 };
-
