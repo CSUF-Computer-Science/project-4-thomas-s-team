@@ -27,7 +27,8 @@ std::vector<string> readStationNames(const std::string& filename) {
 		file >> ID;
 		stations[ID] = s;
 	}
-
+	
+	file.close();
 	return stations;
 }
 
@@ -50,5 +51,6 @@ Graph *buildGraphfromDatafile(const std::string& filename) {
 		stationLink->insertEdge(a, b);
 	}
 	
+	file.close();
 	return stationLink;
 }
